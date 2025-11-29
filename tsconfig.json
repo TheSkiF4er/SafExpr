@@ -1,1 +1,121 @@
+{
+  // Base TypeScript configuration for Safexpr.
+  // This config is focused on development: strict type checking, noEmit.
+  // A separate tsconfig.build.json should handle actual compilation for publishing.
 
+  "compilerOptions": {
+    /* Language and environment */
+
+    // Modern enough target to support async/await and new JS features.
+    "target": "ES2020",
+
+    // Use native ESM; bundler (Rollup/tsup) will produce final formats.
+    "module": "ESNext",
+
+    // Standard libs for a Node + browser-compatible library.
+    "lib": ["ES2020", "DOM"],
+
+    // Use modern module resolution that works well with ESM and bundlers.
+    "moduleResolution": "NodeNext",
+
+    // Allow importing .json files as modules.
+    "resolveJsonModule": true,
+
+    // Treat the project as ESM-compatible (recommended for modern libs).
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Strictness and safety */
+
+    // Turn on all strict type-checking options.
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+
+    // Catch common issues early.
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    /* Emission (disabled for dev config) */
+
+    // We don’t emit JS from this config; use tsconfig.build.json for builds.
+    "noEmit": true,
+
+    /* Module layout & paths */
+
+    // Base directory for non-relative module imports.
+    "baseUrl": ".",
+
+    // Path aliases (kept in sync with vitest.config.mts and bundler config).
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    /* JS / JSX / interop */
+
+    // Safexpr is TS-first; we normally don’t allow JS files in src.
+    "allowJs": false,
+    "checkJs": false,
+
+    // In case we have React-based examples/integrations in src/integrations/react.
+    "jsx": "react-jsx",
+
+    /* Types & tooling */
+
+    // Don’t waste time type checking node_modules type declarations.
+    "skipLibCheck": true,
+
+    // Useful when using Vitest and Node types in tests.
+    "types": ["node", "vitest/globals"],
+
+    // Emit decorator metadata is not needed; keep config clean.
+    "experimentalDecorators": false,
+    "emitDecoratorMetadata": false,
+
+    /* Output directory / declarations (handled by tsconfig.build.json) */
+
+    // Kept for clarity; tsconfig.build.json should override these.
+    // "outDir": "./dist",
+    // "declaration": true,
+    // "declarationMap": true,
+    // "sourceMap": true,
+
+    /* Misc */
+
+    // Increases compatibility with tooling by preserving const enums.
+    "preserveConstEnums": true,
+
+    // Allow importing ESM packages in CJS contexts if needed by tooling.
+    "allowImportingTsExtensions": false,
+
+    // Ensure consistent casing in imports (important on case-sensitive FS).
+    "forceConsistentCasingInFileNames": true
+  },
+
+  /* Files included / excluded from type checking */
+
+  "include": [
+    "src",
+    "tests",
+    "scripts",
+    "vitest.config.mts"
+  ],
+
+  "exclude": [
+    "dist",
+    "coverage",
+    "node_modules",
+    "examples/**",
+    "benchmarks/**",
+    ".git",
+    ".turbo"
+  ]
+  }
