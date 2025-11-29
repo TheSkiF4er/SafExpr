@@ -15,10 +15,9 @@
     "security",
     "dsl"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": {
     "name": "TheSkiF4er",
-    "email": "coop@skif4er.ru",
     "url": "https://github.com/TheSkiF4er"
   },
   "homepage": "https://github.com/TheSkiF4er/safexpr#readme",
