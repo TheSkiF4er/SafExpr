@@ -1,1 +1,98 @@
+{
+  "name": "safexpr",
+  "version": "0.1.0",
+  "description": "A safe, minimal, and type-safe expression engine for JavaScript/TypeScript — formulas, rules, and filters without eval or global access.",
+  "keywords": [
+    "expression-engine",
+    "expression",
+    "eval",
+    "safe-eval",
+    "rules",
+    "filters",
+    "formulas",
+    "javascript",
+    "typescript",
+    "security",
+    "dsl"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "TheSkiF4er",
+    "email": "coop@skif4er.ru",
+    "url": "https://github.com/TheSkiF4er"
+  },
+  "homepage": "https://github.com/TheSkiF4er/safexpr#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheSkiF4er/safexpr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheSkiF4er/safexpr/issues"
+  },
 
+  "type": "module",
+
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+
+  "files": [
+    "dist"
+  ],
+
+  "sideEffects": false,
+
+  "engines": {
+    "node": ">=18"
+  },
+
+  "scripts": {
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:js": "rollup -c",
+    "build": "npm run build:types && npm run build:js",
+
+    "test": "vitest run",
+    "test:watch": "vitest",
+
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" \"tests/**/*.ts\" --fix",
+
+    "format": "prettier --check \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,tsx}\" \"tests/**/*.{ts,tsx}\"",
+
+    "clean": "rm -rf dist coverage .turbo .vitest",
+
+    "prepare": "npm run build"
+  },
+
+  "dependencies": {
+  },
+
+  "peerDependencies": {
+  },
+
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^12.0.0",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "prettier": "^3.0.0",
+    "rollup": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite-tsconfig-paths": "^5.0.0",
+    "vitest": "^2.0.0"
+  }
+}
