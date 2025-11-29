@@ -76,7 +76,6 @@ If you’re unsure whether your idea fits, feel free to open a **discussion** or
    ```bash
    git clone https://github.com/<your-username>/safexpr.git
    cd safexpr
-````
 
 3. Add the original repository as upstream (optional but recommended):
 
