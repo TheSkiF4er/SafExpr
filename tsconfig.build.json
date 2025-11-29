@@ -1,1 +1,65 @@
+{
+  // Build configuration for Safexpr.
+  // This file is used for publishing the library:
+  // - It extends the main tsconfig.json (strict dev config).
+  // - It emits ONLY type declarations (.d.ts) for the public API.
+  // - JavaScript output is expected to be handled by the bundler
+  //   (e.g. Rollup / tsup) using this config for type checking.
 
+  "extends": "./tsconfig.json",
+
+  "compilerOptions": {
+    /* Emission */
+
+    // We want to emit something for the build, so disable noEmit from base config.
+    "noEmit": false,
+
+    // Output directory for generated declaration files.
+    "outDir": "./dist",
+
+    // Generate .d.ts files for all compiled TypeScript files.
+    "declaration": true,
+
+    // Generate source maps for .d.ts files (helpful for tooling and debugging).
+    "declarationMap": true,
+
+    // Emit only declarations, no .js. The JS bundle is produced separately.
+    "emitDeclarationOnly": true,
+
+    // Recommended to keep source maps for better debugging of type issues
+    // (no JS here, but some tools still benefit).
+    "sourceMap": false,
+
+    /* Project structure */
+
+    // Root of the source files.
+    "rootDir": "./src",
+
+    // Enable incremental builds for faster rebuilds (optional but helpful in CI/local).
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+
+    /* Public API hygiene */
+
+    // If you mark internal APIs with /** @internal */, they will be stripped from .d.ts.
+    "stripInternal": false,
+
+    // Keep const enums as-is in .d.ts for better ergonomics.
+    "preserveConstEnums": true
+  },
+
+  // For the build, we only want to process the actual library source.
+  "include": ["src"],
+
+  // Exclude anything that should not produce public declarations.
+  "exclude": [
+    "tests",
+    "examples",
+    "benchmarks",
+    "scripts",
+    "dist",
+    "node_modules",
+    ".git",
+    ".turbo"
+  ]
+}
