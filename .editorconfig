@@ -1,1 +1,52 @@
+# EditorConfig helps maintain consistent coding styles between different editors and IDEs.
+# See: https://editorconfig.org
 
+root = true
+
+# -------------------------------------------------
+# Default settings for all files
+# -------------------------------------------------
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# Markdown / text files
+# - Allow trailing whitespace for tables / formatting
+# - Keep standard indentation
+# -------------------------------------------------
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+[*.txt]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# -------------------------------------------------
+# JSON / YAML
+# - Keep 2-space indentation
+# - Trailing whitespace trimmed
+# -------------------------------------------------
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# TypeScript / JavaScript / JSX / TSX
+# -------------------------------------------------
+[*.{ts,tsx,js,jsx,mts,cts}]
+indent_style = space
+indent_size = 2
+
+# -------------------------------------------------
+# Config files
+# -------------------------------------------------
+[*.{editorconfig,eslintrc,prettierrc}]
+indent_style = space
+indent_size = 2
