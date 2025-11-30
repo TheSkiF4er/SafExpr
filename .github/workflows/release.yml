@@ -1,1 +1,140 @@
+# SafExpr/.github/workflows/release.yml
+#
+# Automated release workflow for Safexpr.
+# - Triggers on version tags (vX.Y.Z)
+# - Installs dependencies, lints, tests, and builds
+# - Publishes to npm
+# - Creates a GitHub Release with notes from CHANGELOG.md
+#
+# Required secrets:
+# - NPM_TOKEN: npm automation token with "publish" permission
 
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write      # for creating GitHub Releases
+  packages: read
+  id-token: write
+
+jobs:
+  release:
+    name: Publish Safexpr Release
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------
+      # Checkout repository
+      # -----------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needed to read full git history for changelog if required
+
+      # -----------------------------
+      # Setup Node.js
+      # -----------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      # -----------------------------
+      # Install dependencies
+      # -----------------------------
+      - name: Install dependencies
+        run: npm ci
+
+      # -----------------------------
+      # Run lint checks
+      # -----------------------------
+      - name: Lint
+        run: npm run lint
+
+      # -----------------------------
+      # Run tests
+      # -----------------------------
+      - name: Test
+        run: npm test
+
+      # -----------------------------
+      # Build library
+      # -----------------------------
+      - name: Build
+        run: npm run build
+
+      # -----------------------------
+      # Extract version from tag
+      # -----------------------------
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      # -----------------------------
+      # Verify package.json version matches tag
+      # -----------------------------
+      - name: Verify package.json version matches tag
+        run: |
+          TAG_VERSION="${{ steps.version.outputs.version }}"
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "Tag version:      $TAG_VERSION"
+          echo "package.json:     $PKG_VERSION"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "❌ Version mismatch: tag v$TAG_VERSION vs package.json $PKG_VERSION"
+            exit 1
+          fi
+          echo "✅ Version check passed"
+
+      # -----------------------------
+      # Publish to npm
+      # -----------------------------
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # -----------------------------
+      # Generate release notes from CHANGELOG.md
+      # -----------------------------
+      - name: Generate release notes
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          if [ ! -f CHANGELOG.md ]; then
+            echo "CHANGELOG.md not found, using default release notes."
+            echo "Release ${VERSION}" > RELEASE_NOTES.md
+            exit 0
+          fi
+
+          # Extract section for this version from CHANGELOG.md
+          awk "/^## \\[${VERSION}\\]/ {flag=1;next} /^## \\[/ && flag {flag=0} flag" CHANGELOG.md > RELEASE_NOTES.md
+
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "No specific section for ${VERSION} in CHANGELOG.md, using fallback."
+            echo "Release ${VERSION}" > RELEASE_NOTES.md
+          fi
+
+          echo "Generated release notes:"
+          cat RELEASE_NOTES.md
+
+      # -----------------------------
+      # Create GitHub Release
+      # -----------------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Safexpr ${{ steps.version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
