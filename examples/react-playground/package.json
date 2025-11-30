@@ -1,1 +1,42 @@
-
+{
+  "name": "safexpr-react-playground",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive React playground for Safexpr: edit expressions, context, and see live results and errors.",
+  "author": {
+    "name": "TheSkiF4er",
+    "url": "https://github.com/TheSkiF4er"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "safexpr",
+    "react",
+    "playground",
+    "expression-engine",
+    "typescript",
+    "vite"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "safexpr": "file:../../"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
