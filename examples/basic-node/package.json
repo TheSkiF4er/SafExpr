@@ -1,1 +1,34 @@
-
+{
+  "name": "safexpr-basic-node-example",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Basic Node.js example demonstrating how to use Safexpr with a typed context, custom functions, and error handling.",
+  "author": {
+    "name": "TheSkiF4er",
+    "url": "https://github.com/TheSkiF4er"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "safexpr",
+    "example",
+    "node",
+    "typescript",
+    "expression-engine",
+    "security"
+  ],
+  "main": "index.ts",
+  "scripts": {
+    "start": "tsx index.ts",
+    "start:node": "node dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "safexpr": "file:../../"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
