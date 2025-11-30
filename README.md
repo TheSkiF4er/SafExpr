@@ -1,4 +1,4 @@
-# Safexpr
+# SafExpr
 
 > A safe, minimal, and type-safe expression engine for JavaScript/TypeScript —  
 > formulas, rules, and filters without `eval`, without global access, with a great DX.
