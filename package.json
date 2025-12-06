@@ -1,6 +1,6 @@
 {
-  "name": "safexpr",
-  "version": "0.1.0",
+  "name": "SafExpr",
+  "version": "1.0.0",
   "description": "A safe, minimal, and type-safe expression engine for JavaScript/TypeScript — formulas, rules, and filters without eval or global access.",
   "keywords": [
     "expression-engine",
@@ -20,13 +20,13 @@
     "name": "TheSkiF4er",
     "url": "https://github.com/TheSkiF4er"
   },
-  "homepage": "https://github.com/TheSkiF4er/safexpr#readme",
+  "homepage": "https://github.com/TheSkiF4er/SafExpr",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheSkiF4er/safexpr.git"
+    "url": "https://github.com/TheSkiF4er/SafExpr.git"
   },
   "bugs": {
-    "url": "https://github.com/TheSkiF4er/safexpr/issues"
+    "url": "https://github.com/TheSkiF4er/SafExpr/issues"
   },
 
   "type": "module",
